@@ -1,0 +1,18 @@
+{
+  "name": "ywc-reunion-lotto",
+  "module": "index.js",
+  "scripts": {
+    "start": "bun run index.js",
+    "develop": "bun run --hot index.js",
+    "dev": "bun run --hot index.js"
+  },
+  "type": "module",
+  "devDependencies": {
+    "bun-types": "^0.2.2"
+  },
+  "dependencies": {
+    "baojs": "^0.2.1",
+    "hono": "^2.5.1",
+    "serve-static-bun": "^0.3.0"
+  }
+}
