@@ -2,6 +2,8 @@
 
 ## Server part
 
+[**Bun, Bun, Bun, Bun, Bun! Lovely Bun! Wonderful Bun!**](https://youtu.be/_bW4vEo1F4E?t=86)
+
 To install dependencies:
 
 ```bash
@@ -86,6 +88,10 @@ Here's the format of `SQL row record`:
 This project was created using `bun init` in bun v0.2.2. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
 
 ## Web part
+
+![image](https://user-images.githubusercontent.com/3356814/201897015-27efd0e8-01d0-48dc-91ff-550f224af867.png)
+![image](https://user-images.githubusercontent.com/3356814/201897088-d592c030-a126-468c-b7f3-a0df448e2ef5.png)
+![image](https://user-images.githubusercontent.com/3356814/201897175-f13cc44b-33e6-4588-8a92-c151093b2626.png)
 
 Well, because I'm "lazy", I use SveltKit.
 
