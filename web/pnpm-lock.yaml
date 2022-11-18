@@ -18,6 +18,7 @@ specifiers:
   svelte-check: ^2.7.1
   svelte-chota: ^1.8.6
   svelte-french-toast: ^1.0.3
+  svelte-marquee-text-widget: ^1.1.0
   svelte-preprocess: ^4.10.7
   tslib: ^2.3.1
   typescript: ^4.7.4
@@ -27,11 +28,12 @@ dependencies:
   chota: 0.8.0
   svelte-chota: 1.8.6
   svelte-french-toast: 1.0.3_svelte@3.53.1
+  svelte-marquee-text-widget: 1.1.0
 
 devDependencies:
   '@playwright/test': 1.25.0
   '@sveltejs/adapter-static': 1.0.0-next.48
-  '@sveltejs/kit': 1.0.0-next.546_svelte@3.53.1+vite@3.2.3
+  '@sveltejs/kit': 1.0.0-next.551_svelte@3.53.1+vite@3.2.3
   '@typescript-eslint/eslint-plugin': 5.42.1_2udltptbznfmezdozpdoa2aemq
   '@typescript-eslint/parser': 5.42.1_rmayb2veg2btbq6mbmnyivgasy
   eslint: 8.27.0
@@ -159,8 +161,8 @@ packages:
     resolution: {integrity: sha512-Z5Z+QZOav6D0KDeU3ReksGERJg/sX1k5OKWWXyQ11OwGErEEwSXHYRUyjaBmZEPeGzpVVGwwMUK8YWJlG/MKeA==}
     dev: true
 
-  /@sveltejs/kit/1.0.0-next.546_svelte@3.53.1+vite@3.2.3:
-    resolution: {integrity: sha512-QEA8fIdgRdjf9e0ti+EuEPG3SopyhA9/B4VuWqkT8W6A2q+jb5v2ZvImDRbpOnXJ0G55hlnFq9Mp2hHQ4DYYbQ==}
+  /@sveltejs/kit/1.0.0-next.551_svelte@3.53.1+vite@3.2.3:
+    resolution: {integrity: sha512-pZXPoKHFcEXCEN64bw87Xv3cZO7sGztPKYXyLuzceie4qNzAQOMejxewm1xSYcaublleYXLdBWcrWwGlaSWnyw==}
     engines: {node: '>=16.14'}
     hasBin: true
     requiresBuild: true
@@ -1618,6 +1620,10 @@ packages:
     dependencies:
       svelte: 3.53.1
     dev: true
+
+  /svelte-marquee-text-widget/1.1.0:
+    resolution: {integrity: sha512-mBO3fBA++Xwn7P1VdgeH4OI+MrulxxNrGwdX7NVA1GU1ZCyrQUcb7AD8V3s6s2ZWW3cRXVhbBmgXW+aABYV9kA==}
+    dev: false
 
   /svelte-preprocess/4.10.7_hph7tukb53j4o7zfpohqfedc7a:
     resolution: {integrity: sha512-sNPBnqYD6FnmdBrUmBCaqS00RyCsCpj2BG58A1JBswNF7b0OKviwxqVrOL/CKyJrLSClrSeqQv5BXNg2RUbPOw==}

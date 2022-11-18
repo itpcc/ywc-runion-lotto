@@ -1,7 +1,11 @@
 {
 	"name": "ywc-reunion-lotto",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"private": true,
+	"description": "YWC Reunion #11(2): Lotto WebSocket Projector & Roller page",
+	"author": {
+	  "name": "Rachasak Ragkamnerd"
+	},
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build",
@@ -14,8 +18,8 @@
 	},
 	"devDependencies": {
 		"@playwright/test": "1.25.0",
-		"@sveltejs/kit": "next",
 		"@sveltejs/adapter-static": "1.0.0-next.48",
+		"@sveltejs/kit": "next",
 		"@typescript-eslint/eslint-plugin": "^5.27.0",
 		"@typescript-eslint/parser": "^5.27.0",
 		"eslint": "^8.16.0",
@@ -36,6 +40,7 @@
 	"dependencies": {
 		"chota": "^0.8.0",
 		"svelte-chota": "^1.8.6",
-		"svelte-french-toast": "^1.0.3"
+		"svelte-french-toast": "^1.0.3",
+		"svelte-marquee-text-widget": "^1.1.0"
 	}
 }
