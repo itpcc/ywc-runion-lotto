@@ -8,6 +8,8 @@
 	// @ts-ignore
 	import MarqueeTextWidget from "svelte-marquee-text-widget";
 
+	const ROLL_DURATION_SEC = 5;
+
 	let isConnectWS = false;
 	let isRoller = false;
 	let token = '';
@@ -24,23 +26,56 @@
 	let socket;
 
 	/**
+	 * @type {number}
+	 */
+	let rollNumberStartAt = 0;
+	let actualSerialNo = '';
+
+	/**
+	 * @param {number} ts
+	 */
+	function rollNumer (ts) {
+		if (! rollNumberStartAt) {
+			rollNumberStartAt = ts;
+		}
+
+		if (ts - rollNumberStartAt > (ROLL_DURATION_SEC * 1000)) {
+			rollNumberStartAt = 0;
+
+			serialNo = actualSerialNo;
+
+			return;
+		}
+
+		serialNo = Number(Math.random() * 10000 % 100).toFixed().padStart(2, '0');
+
+		window.requestAnimationFrame(rollNumer);
+	};
+
+
+	/**
 	 * @param {{ serialno: ?string; name: ?string; ywc_gen: ?string; }} payload
 	 */
-	function updateSerial (payload) {
-		console.log('updateSerial', payload);
-		serialNo = payload?.serialno
+	function updateSerial (payload, isRoll = false) {
+		const displaySerialNo = payload?.serialno
 			? (
 				(randomMode === 'lotto') ?
 					Number(payload?.serialno).toString().padStart(2, '0') :
 					payload?.serialno
 			) :
 			'--';
+		if (isRoll) {
+			actualSerialNo = displaySerialNo;
+			window.requestAnimationFrame(rollNumer);
+		} else {
+			serialNo = displaySerialNo;
+		}
+
 		ticketName = payload?.name ?? '________';
 		ticketYwcGen = payload?.ywc_gen ? `YWC#${payload.ywc_gen.padStart(2, '0')}` : '';
 
 		const ticketNameNonFloat = ticketName.replace(/[\u0E31\u0E34-\u0E3E\u0E47-\u0E4E]/g, '');
 		ticketNameFontSize = `${10 + (13 / Math.max(1, (ticketNameNonFloat.length - 4) * 2))}rem`;
-		console.log('ticketNameNonFloat', ticketNameNonFloat);
 		ticketNameMarqueePause = ticketNameNonFloat.length <= 9;
 		ticketYwcGenDisplay = ((payload?.ywc_gen?.length ?? 0) > 0) ? 'block' : 'none';
 	};
@@ -72,7 +107,7 @@
 				} else if (payload?.command === 'last_serial' && payload?.serialno) {
 					updateSerial(payload);
 				} else if (payload?.command === 'roll' && payload?.serialno) {
-					updateSerial(payload);
+					updateSerial(payload, true);
 				}
 			} catch (err) {
 				console.error('JSON Error: ', err);
@@ -298,6 +333,8 @@
 		font-size: 20rem;
 		text-align: center;
 		color: blue;
+
+		will-change: contents;
 	}
 	.lotto-number {
 		position: relative;
