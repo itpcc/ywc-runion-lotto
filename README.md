@@ -23,6 +23,8 @@ Noted that, for testing; if you want to test, replace line #7 in `index.js` from
 const db = new Database("lotto.sqlite");
 ```
 
+to:
+
 ```js
 const db = new Database(":memory:");
 ```
@@ -71,13 +73,13 @@ Here's the format of `SQL row record`:
 
 | Command     | Role                   | Payload                                                 | Description                                 | Response                                                        |
 |-------------|------------------------|---------------------------------------------------------|---------------------------------------------|-----------------------------------------------------------------|
-| mode        | admin                  | `"mode": "<lotto|ticket>"`                              | Change random mode between lotto and ticket | (DEFAULT)                                                       |
+| mode        | admin                  | `"mode": "<lotto\|ticket>"`                              | Change random mode between lotto and ticket | (DEFAULT)                                                       |
 | lock        | admin                  | Mode `lotto`: `"serialno": <number from 1 - 99>`        | Lock the serial number in the next roll     | (DEFAULT)                                                       |
 |             |                        | Mode `ticket`: `"serialno": <Ticket number (ticketno)>` |                                             |                                                                 |
 | unlock      | admin                  | (NULL)                                                  | Unlock the serial number                    | (DEFAULT)                                                       |
-| get_lock    | admin                  | (NULL)                                                  | Unlock the serial number                    | `"data":<SQL config record | NULL>}`                            |
-| last_serial | admin/roller/projector | (NULL)                                                  | See the last number that roll               | `"serialno":<number | NULL>}, "data":<SQL row record | NULL>`\* |
-| list        | admin                  | (NULL)                                                  | List history of rolling numbers             | `"data":<SQL row record[] | NULL>`\*                            |
+| get_lock    | admin                  | (NULL)                                                  | Unlock the serial number                    | `"data":<SQL config record \| NULL>}`                            |
+| last_serial | admin/roller/projector | (NULL)                                                  | See the last number that roll               | `"serialno":<number \| NULL>}, "data":<SQL row record \| NULL>`\* |
+| list        | admin                  | (NULL)                                                  | List history of rolling numbers             | `"data":<SQL row record[] \| NULL>`\*                            |
 | roll        | roller                 | (NULL)                                                  | Well, roll the ~~dice~~ number              | (DEFAULT)\*                                                     |
 
 Note:
@@ -95,7 +97,7 @@ Note:
 | Message     | Description                 | Payload                                                              |
 |-------------|-----------------------------|----------------------------------------------------------------------|
 | Connect     | Message send once connected | `{"command":"connect","ok":true,"role":"<admin/roller/projector>"}`  |
-| Mode Change | New Mode is applied         | `{"command":"mode_change","mode":"<lotto|ticket>", "serialno":99}`\* |
+| Mode Change | New Mode is applied         | `{"command":"mode_change","mode":"<lotto\|ticket>", "serialno":99}`\* |
 | Roll        | The wait IS OVER            | `{"command":"roll","type":"<random/lock/notrandom>","serialno":99}`  |
 
 Note:
