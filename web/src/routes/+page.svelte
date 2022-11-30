@@ -20,6 +20,20 @@
 	let ticketNameFontSize = '10rem';
 	let ticketYwcGen = '';
 	let ticketYwcGenDisplay = 'block';
+
+	// Admin variable
+	let isAdmin = false;
+	let isLock = false;
+	let adminLockSerial = '';
+	let adminLockTicket = '';
+	/**
+	 * @type {{
+	 *     serialno: string,
+	 *     name: string,
+	 *     ywc_gen: string
+	 * }[]}
+	 */
+	let ticketList = [];
 	/**
 	 * @type {WebSocket}
 	 */
@@ -51,7 +65,6 @@
 
 		window.requestAnimationFrame(rollNumer);
 	};
-
 
 	/**
 	 * @param {{ serialno: ?string; name: ?string; ywc_gen: ?string; }} payload
@@ -93,7 +106,7 @@
 			socket.send('{ "command":"last_serial" }');
 		});
 		socket.addEventListener('message', (event) => {
-			// console.log('Message from server ', event.data);
+			console.log('Message from server ', event.data);
 			try {
 				const payload = JSON.parse(event.data);
 
@@ -101,13 +114,43 @@
 					isConnectWS = true;
 					randomMode = payload.mode;
 					isRoller = (payload.role === 'roller');
+					isAdmin = (payload.role === 'admin');
+
+					if (isAdmin) {
+						socket.send('{ "command":"get_lock" }');
+
+						if (randomMode === 'ticket') {
+							socket.send('{ "command":"tickets" }');
+						}
+					}
 				} else if (payload?.command === 'mode_change' && payload?.mode) {
 					randomMode = payload.mode;
 					updateSerial(payload);
 				} else if (payload?.command === 'last_serial' && payload?.serialno) {
 					updateSerial(payload);
+
+					if (isAdmin) toast.success(`Load last serial: ${payload?.serialno}`);
 				} else if (payload?.command === 'roll' && payload?.serialno) {
 					updateSerial(payload, true);
+
+					if (isAdmin) toast.success(`Roll: ${payload?.serialno}`);
+				} else if (payload?.command === 'get_lock' && payload?.ok) {
+					isLock = payload?.data === null;
+
+					if (! isLock) {
+						if (randomMode === 'lotto') adminLockSerial = payload.data?.value;
+						else adminLockTicket = payload.data?.value;
+					}
+				} else if (payload?.command === 'lock' && payload?.ok) {
+					isLock = true;
+
+					if (isAdmin) toast.success(`Lock!`);
+				} else if (payload?.command === 'unlock' && payload?.ok) {
+					isLock = false;
+
+					if (isAdmin) toast.success(`Unlock!`);
+				} else if (payload?.command === 'tickets' && payload?.ok) {
+					ticketList = payload?.data ?? [];
 				}
 			} catch (err) {
 				console.error('JSON Error: ', err);
@@ -131,13 +174,31 @@
 		});
 	}
 
-	function rollLotto() {
+	/**
+	 * @param {string | ArrayBufferLike | Blob | ArrayBufferView} cmdStr
+	 */
+	function sendCommand (cmdStr) {
 		if (!socket) {
 			toast.error('No socket provided');
 			return;
 		}
 
-		socket.send('{ "command":"roll" }');
+		socket.send(cmdStr);
+	}
+
+	function rollLotto() {
+		sendCommand('{ "command":"roll" }');
+	}
+
+	function adminCommandLock() {
+		sendCommand(JSON.stringify({
+			command: 'lock',
+			serialno: Number((randomMode === 'lotto') ? adminLockSerial : adminLockTicket)
+		}));
+	}
+
+	function adminCommandUnlock() {
+		sendCommand('{ "command":"unlock" }');
 	}
 
 	onDestroy(() => {
@@ -192,6 +253,22 @@
 				</Row>
 			{/if}
 		</Container>
+		<Card class="roll-admin pull-right {isAdmin ? '' : 'is-hidden'}">
+			<Field gapless class="{(! isLock && randomMode === 'lotto') ? '' : 'is-hidden'}">
+				<Input number min="1" max="99" placeholder="Username" bind:value={adminLockSerial}/>
+				<Button error on:click={adminCommandLock}>🔐 Lock</Button>
+			</Field>
+			<Field gapless class="{(! isLock && randomMode === 'ticket') ? '' : 'is-hidden'}">
+				<select bind:value={adminLockTicket}>
+					<option disabled selected>Choose</option>
+					{#each ticketList as ticketInfo}
+						<option value="{ticketInfo.serialno}">{ticketInfo.name} (YWC#{ticketInfo.ywc_gen})</option>
+					{/each}
+				</select>
+				<Button error on:click={adminCommandLock}>🔐 Lock</Button>
+			</Field>
+			<Button success class="{isLock ? '' : 'is-hidden'}" on:click={adminCommandUnlock}>Unlock</Button>
+		</Card>
 	{/if}
 </Container>
 <Toaster />
@@ -414,4 +491,10 @@
 		background-repeat: no-repeat;
 	}
 
+	/* Admin part */
+	.roll-admin {
+		position: fixed;
+		right: 1rem;
+		bottom: 1rem;
+	}
 </style>

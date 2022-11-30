@@ -215,6 +215,17 @@ app.ws("/ws", {
 					...additionalInfo(randomModeStr, data?.serialno)
 				}), false);
 				return;
+			} else if (payload?.command === 'tickets' && role === 'admin') {
+				const data = db.query(`
+					SELECT ticketno AS serialno, t.name, t.ywc_gen
+					FROM tickets;
+				`).all();
+				ws.send(JSON.stringify({
+					command: 'tickets',
+					ok: true,
+					data
+				}), false);
+				return;
 			} else if (payload?.command === 'list' && role === 'admin') {
 				const data = db.query(
 					(randomMode() === 'lotto') ? `
@@ -227,7 +238,7 @@ app.ws("/ws", {
 					`
 				).all();
 				ws.send(JSON.stringify({
-					command: 'unlock',
+					command: 'list',
 					ok: true,
 					data
 				}), false);
