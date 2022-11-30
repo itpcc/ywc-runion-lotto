@@ -8,7 +8,7 @@
 	// @ts-ignore
 	import MarqueeTextWidget from "svelte-marquee-text-widget";
 
-	const ROLL_DURATION_SEC = 5;
+	const ROLL_DURATION_MS = 5000;
 
 	let isConnectWS = false;
 	let isRoller = false;
@@ -53,7 +53,7 @@
 			rollNumberStartAt = ts;
 		}
 
-		if (ts - rollNumberStartAt > (ROLL_DURATION_SEC * 1000)) {
+		if (ts - rollNumberStartAt > ROLL_DURATION_MS) {
 			rollNumberStartAt = 0;
 
 			serialNo = actualSerialNo;
@@ -61,7 +61,7 @@
 			return;
 		}
 
-		serialNo = Number(Math.random() * 10000 % 100).toFixed().padStart(2, '0');
+		serialNo = (Math.random() * 100).toFixed().padStart(2, '0');
 
 		window.requestAnimationFrame(rollNumer);
 	};
