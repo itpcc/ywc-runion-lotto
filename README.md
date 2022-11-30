@@ -97,7 +97,7 @@ Note:
 | Message     | Description                 | Payload                                                              |
 |-------------|-----------------------------|----------------------------------------------------------------------|
 | Connect     | Message send once connected | `{"command":"connect","ok":true,"role":"<admin/roller/projector>"}`  |
-| Mode Change | New Mode is applied         | `{"command":"mode_change","mode":"<lotto|ticket>", "serialno":99}`\* |
+| Mode Change | New Mode is applied         | `{"command":"mode_change","mode":"<lotto\|ticket>", "serialno":99}`\* |
 | Roll        | The wait IS OVER            | `{"command":"roll","type":"<random/lock/notrandom>","serialno":99}`  |
 
 Note:
