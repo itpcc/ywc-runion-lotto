@@ -71,16 +71,17 @@ Here's the format of `SQL row record`:
 }
 ```
 
-| Command     | Role                   | Payload                                                 | Description                                 | Response                                                        |
-|-------------|------------------------|---------------------------------------------------------|---------------------------------------------|-----------------------------------------------------------------|
-| mode        | admin                  | `"mode": "<lotto\|ticket>"`                              | Change random mode between lotto and ticket | (DEFAULT)                                                       |
-| lock        | admin                  | Mode `lotto`: `"serialno": <number from 1 - 99>`        | Lock the serial number in the next roll     | (DEFAULT)                                                       |
-|             |                        | Mode `ticket`: `"serialno": <Ticket number (ticketno)>` |                                             |                                                                 |
-| unlock      | admin                  | (NULL)                                                  | Unlock the serial number                    | (DEFAULT)                                                       |
-| get_lock    | admin                  | (NULL)                                                  | Unlock the serial number                    | `"data":<SQL config record \| NULL>}`                            |
+| Command     | Role                   | Payload                                                 | Description                                 | Response                                                          |
+|-------------|------------------------|---------------------------------------------------------|---------------------------------------------|-------------------------------------------------------------------|
+| mode        | admin                  | `"mode": "<lotto\|ticket>"`                             | Change random mode between lotto and ticket | (DEFAULT)                                                         |
+| lock        | admin                  | Mode `lotto`: `"serialno": <number from 1 - 99>`        | Lock the serial number in the next roll     | (DEFAULT)                                                         |
+|             |                        | Mode `ticket`: `"serialno": <Ticket number (ticketno)>` |                                             |                                                                   |
+| unlock      | admin                  | (NULL)                                                  | Unlock the serial number                    | (DEFAULT)                                                         |
+| get_lock    | admin                  | (NULL)                                                  | Unlock the serial number                    | `"data":<SQL config record \| NULL>}`                             |
+| tickets     | admin                  | (NULL)                                                  | List tickets loaded in the database         | `"data":<SQL ticket record \| NULL>}` \*                          |
 | last_serial | admin/roller/projector | (NULL)                                                  | See the last number that roll               | `"serialno":<number \| NULL>}, "data":<SQL row record \| NULL>`\* |
-| list        | admin                  | (NULL)                                                  | List history of rolling numbers             | `"data":<SQL row record[] \| NULL>`\*                            |
-| roll        | roller                 | (NULL)                                                  | Well, roll the ~~dice~~ number              | (DEFAULT)\*                                                     |
+| list        | admin                  | (NULL)                                                  | List history of rolling numbers             | `"data":<SQL row record[] \| NULL>`\*                             |
+| roll        | roller                 | (NULL)                                                  | Well, roll the ~~dice~~ number              | (DEFAULT)\*                                                       |
 
 Note:
 \*  If the mode is `ticket`, these fields will also included in the response (or in each row of SQL row record):
@@ -94,11 +95,11 @@ Note:
 
 #### Messages
 
-| Message     | Description                 | Payload                                                              |
-|-------------|-----------------------------|----------------------------------------------------------------------|
-| Connect     | Message send once connected | `{"command":"connect","ok":true,"role":"<admin/roller/projector>"}`  |
+| Message     | Description                 | Payload                                                               |
+|-------------|-----------------------------|-----------------------------------------------------------------------|
+| Connect     | Message send once connected | `{"command":"connect","ok":true,"role":"<admin/roller/projector>"}`   |
 | Mode Change | New Mode is applied         | `{"command":"mode_change","mode":"<lotto\|ticket>", "serialno":99}`\* |
-| Roll        | The wait IS OVER            | `{"command":"roll","type":"<random/lock/notrandom>","serialno":99}`  |
+| Roll        | The wait IS OVER            | `{"command":"roll","type":"<random/lock/notrandom>","serialno":99}`   |
 
 Note:
 \*  If the mode is `ticket`, these fields will also included in the response:
@@ -122,7 +123,8 @@ This project was created using `bun init` in bun v0.2.2. [Bun](https://bun.sh) i
 --------------
 ![image](https://user-images.githubusercontent.com/3356814/202716234-43403b48-75df-4443-ba93-cade55e6ed8a.png)
 ![image](https://user-images.githubusercontent.com/3356814/202716382-83e3d292-60b9-4a2a-a099-81f5aa761ce9.png)
-
+--------------
+![image](https://user-images.githubusercontent.com/3356814/204712589-bc193670-1b2c-47be-808c-859115fe3f6d.png)
 
 Well, because I'm "lazy", I use SveltKit.
 
