@@ -255,7 +255,7 @@
 		</Container>
 		<Card class="roll-admin pull-right {isAdmin ? '' : 'is-hidden'}">
 			<Field gapless class="{(! isLock && randomMode === 'lotto') ? '' : 'is-hidden'}">
-				<Input number min="1" max="99" placeholder="Username" bind:value={adminLockSerial}/>
+				<Input number min="1" max="99" placeholder="99" bind:value={adminLockSerial}/>
 				<Button error on:click={adminCommandLock}>🔐 Lock</Button>
 			</Field>
 			<Field gapless class="{(! isLock && randomMode === 'ticket') ? '' : 'is-hidden'}">
