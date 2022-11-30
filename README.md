@@ -77,9 +77,9 @@ Here's the format of `SQL row record`:
 | lock        | admin                  | Mode `lotto`: `"serialno": <number from 1 - 99>`        | Lock the serial number in the next roll     | (DEFAULT)                                                       |
 |             |                        | Mode `ticket`: `"serialno": <Ticket number (ticketno)>` |                                             |                                                                 |
 | unlock      | admin                  | (NULL)                                                  | Unlock the serial number                    | (DEFAULT)                                                       |
-| get_lock    | admin                  | (NULL)                                                  | Unlock the serial number                    | `"data":<SQL config record | NULL>}`                            |
-| last_serial | admin/roller/projector | (NULL)                                                  | See the last number that roll               | `"serialno":<number | NULL>}, "data":<SQL row record | NULL>`\* |
-| list        | admin                  | (NULL)                                                  | List history of rolling numbers             | `"data":<SQL row record[] | NULL>`\*                            |
+| get_lock    | admin                  | (NULL)                                                  | Unlock the serial number                    | `"data":<SQL config record \| NULL>}`                            |
+| last_serial | admin/roller/projector | (NULL)                                                  | See the last number that roll               | `"serialno":<number \| NULL>}, "data":<SQL row record \| NULL>`\* |
+| list        | admin                  | (NULL)                                                  | List history of rolling numbers             | `"data":<SQL row record[] \| NULL>`\*                            |
 | roll        | roller                 | (NULL)                                                  | Well, roll the ~~dice~~ number              | (DEFAULT)\*                                                     |
 
 Note:
