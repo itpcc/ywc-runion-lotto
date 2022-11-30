@@ -23,6 +23,8 @@ Noted that, for testing; if you want to test, replace line #7 in `index.js` from
 const db = new Database("lotto.sqlite");
 ```
 
+to:
+
 ```js
 const db = new Database(":memory:");
 ```
@@ -71,7 +73,7 @@ Here's the format of `SQL row record`:
 
 | Command     | Role                   | Payload                                                 | Description                                 | Response                                                        |
 |-------------|------------------------|---------------------------------------------------------|---------------------------------------------|-----------------------------------------------------------------|
-| mode        | admin                  | `"mode": "<lotto|ticket>"`                              | Change random mode between lotto and ticket | (DEFAULT)                                                       |
+| mode        | admin                  | `"mode": "<lotto\|ticket>"`                              | Change random mode between lotto and ticket | (DEFAULT)                                                       |
 | lock        | admin                  | Mode `lotto`: `"serialno": <number from 1 - 99>`        | Lock the serial number in the next roll     | (DEFAULT)                                                       |
 |             |                        | Mode `ticket`: `"serialno": <Ticket number (ticketno)>` |                                             |                                                                 |
 | unlock      | admin                  | (NULL)                                                  | Unlock the serial number                    | (DEFAULT)                                                       |
