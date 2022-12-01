@@ -279,7 +279,9 @@
 		$from: $stroke * -1;
 		@for $i from $from through $stroke {
 			@for $j from $from through $stroke {
-				$shadow: append($shadow, $i * 1px $j * 1px 0 $color, comma);
+				@if $i % 4 == 0 and $j % 4 == 0 {
+					$shadow: append($shadow, $i * 1px $j * 1px 0 $color, comma);
+				}
 			}
 		}
 		@return $shadow;
