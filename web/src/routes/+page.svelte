@@ -98,7 +98,7 @@
 			toast.error('No token provided');
 		}
 
-		const url = `ws://${dev ? 'arch.wsl:3000' : location.host}/ws?token=${encodeURI(token)}`;
+		const url = `${location.protocol === 'https:' ? 'wss' : 'ws'}://${dev ? 'arch.wsl:3000' : location.host}/ws?token=${encodeURI(token)}`;
 		socket = new WebSocket(url);
 
 		socket.addEventListener('open', (event) => {
