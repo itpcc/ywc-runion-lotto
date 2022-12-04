@@ -5,7 +5,7 @@ import { parse } from 'csv-parse/sync';
 
 console.log("YWC Reunion#11(2) Lotto server: Begin");
 
-const db = new Database(":memory:"); // const db = new Database("lotto.sqlite"); 
+const db = new Database("lotto.sqlite"); 
 console.log("DB: Init");
 db.run(`CREATE TABLE IF NOT EXISTS lotto (
 	serialno	NUMERIC,
@@ -224,6 +224,23 @@ app.ws("/ws", {
 					command: 'tickets',
 					ok: true,
 					data
+				}), false);
+				return;
+			} else if (payload?.command === 'clear' && role === 'admin') {
+				db.run(
+					(randomMode() === 'lotto')
+						? `DELETE FROM lotto;`
+						: `DELETE FROM ticket_randoms;`
+				);
+				ws.send(JSON.stringify({
+					command: 'clear',
+					ok: true
+				}), false);
+				
+				ws.publish('lotto', JSON.stringify({
+					command: 'last_serial',
+					ok: true,
+					serialno: null
 				}), false);
 				return;
 			} else if (payload?.command === 'list' && role === 'admin') {
