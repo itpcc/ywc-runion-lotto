@@ -1,4 +1,4 @@
-# ywc-reunion-lotto
+# YWC Reunion #11/12: Lotto web
 
 ## Server part
 
@@ -149,6 +149,8 @@ pnpm run build
 
 ## License
 
-UNLICENSED (For now)
+For Non-artwork: [MIT License](./LICENSE)
+
+Artwork: Copyright (c) 2022 Young Webmaster Camp
 
 Thai font is [RD CHULAJARUEK Regular](https://www.f0nt.com/release/rd-chulajaruek-regular/).
